@@ -2,7 +2,7 @@
 
 ## Rationale
 Ever questioned yourself why you need to write more than a single line of code to get a value of private property?
-What if the property is defined in a parent class? 
+What if the property is private and defined in a parent class? Even more toil is required. 
 Please welcome a library to solve this trouble once and for all.
 
 ## Functionality
@@ -19,7 +19,7 @@ make test
 ```
 
 ### Code coverage 🟩
-100%
+![coverage is 100%](/doc/coverage.png)
 
 ## License
 See [LICENSE.md](/LICENSE.md)

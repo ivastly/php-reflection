@@ -10,6 +10,10 @@ use Ivastly\PhpReflection\Test\Fixtures\AClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 
+/**
+ * @covers \Ivastly\PhpReflection\Reflection
+ * @covers \Ivastly\PhpReflection\Exception\PropertyNotFoundInObject
+ */
 class ReflectionTest extends TestCase
 {
 	private Reflection $reflection;
@@ -91,6 +95,10 @@ class ReflectionTest extends TestCase
 				'property'      => 'parentOnlyProtectedField',
 				'expectedValue' => 'parent only protected',
 			],
+			[
+				'property'      => 'parentOnlyPrivateField',
+				'expectedValue' => 'parent only private',
+			],
 		];
 	}
 
@@ -119,6 +127,10 @@ class ReflectionTest extends TestCase
 			],
 			[
 				'property' => 'parentOnlyProtectedField',
+				'exists'   => true,
+			],
+			[
+				'property' => 'parentOnlyPrivateField',
 				'exists'   => true,
 			],
 			[
@@ -154,6 +166,10 @@ class ReflectionTest extends TestCase
 			[
 				'property'           => 'parentOnlyProtectedField',
 				'expectedVisibility' => 'protected',
+			],
+			[
+				'property'           => 'parentOnlyPrivateField',
+				'expectedVisibility' => 'private',
 			],
 		];
 	}

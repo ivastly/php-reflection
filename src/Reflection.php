@@ -16,12 +16,18 @@ class Reflection
 	 * @param string $propertyName
 	 *
 	 * @return bool true if $propertyName exists in object's class, including parent classes, false otherwise.
+	 * @throws ReflectionException
 	 */
 	public function hasProperty(object $object, string $propertyName): bool
 	{
-		$reflectionObject = new ReflectionObject($object);
+		try {
+			$this->getReflectionProperty($object, $propertyName);
 
-		return $reflectionObject->hasProperty($propertyName);
+			return true;
+		}
+		catch (PropertyNotFoundInObject $propertyNotFoundInObjectException) {
+			return false;
+		}
 	}
 
 	/**
@@ -80,6 +86,8 @@ class Reflection
 		if ($reflectionObject->hasProperty($propertyName)) {
 			$reflectionProperty = $reflectionObject->getProperty($propertyName);
 		} else {
+
+			// This is needed for private parent properties only.
 			$parent = $reflectionObject->getParentClass();
 			while ($reflectionProperty === null && $parent !== false) {
 				if ($parent->hasProperty($propertyName)) {
