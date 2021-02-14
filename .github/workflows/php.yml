@@ -34,4 +34,4 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
-      run: php vendor/bin/phpunit --colors=always --bootstrap=test/bootstrap.php test
+      run: make test-with-coverage
