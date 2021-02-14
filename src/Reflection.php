@@ -2,14 +2,76 @@
 
 declare(strict_types=1);
 
-namespace DhJasmin\MailerApi\Arachne\Business\Service;
+namespace Ivastly\PhpReflection;
 
-use InvalidArgumentException;
+use Ivastly\PhpReflection\Exception\PropertyNotFoundInObject;
+use ReflectionException;
 use ReflectionObject;
+use ReflectionProperty;
 
 class Reflection
 {
+	/**
+	 * @param object $object
+	 * @param string $propertyName
+	 *
+	 * @return bool true if $propertyName exists in object's class, including parent classes, false otherwise.
+	 */
+	public function hasProperty(object $object, string $propertyName): bool
+	{
+		$reflectionObject = new ReflectionObject($object);
+
+		return $reflectionObject->hasProperty($propertyName);
+	}
+
+	/**
+	 * @param object $object
+	 * @param string $propertyName
+	 *
+	 * @return mixed value of the property + including properties from parent classes.
+	 * @throws PropertyNotFoundInObject
+	 * @throws ReflectionException
+	 */
 	public function getProperty(object $object, string $propertyName)
+	{
+		$reflectionProperty = $this->getReflectionProperty($object, $propertyName);
+		$reflectionProperty->setAccessible(true);
+
+		return $reflectionProperty->getValue($object);
+	}
+
+	/**
+	 * @param object $object
+	 * @param string $propertyName
+	 *
+	 * @return string 'public', 'protected' or 'private' ("default" visibility is considered as `public`)
+	 * @throws PropertyNotFoundInObject
+	 * @throws ReflectionException
+	 */
+	public function getVisibility(object $object, string $propertyName): string
+	{
+		$reflectionProperty = $this->getReflectionProperty($object, $propertyName);
+
+		if ($reflectionProperty->isPrivate()) {
+			return 'private';
+		}
+
+		if ($reflectionProperty->isPublic()) {
+			return 'public';
+		}
+
+		return 'protected';
+	}
+
+	/**
+	 * @param object $object
+	 * @param string $propertyName
+	 *
+	 * @return ReflectionProperty
+	 * @throws PropertyNotFoundInObject
+	 * @throws ReflectionException
+	 */
+	private function getReflectionProperty(object $object, string $propertyName): ReflectionProperty
 	{
 		$reflectionObject = new ReflectionObject($object);
 
@@ -29,24 +91,9 @@ class Reflection
 		}
 
 		if (!$reflectionProperty) {
-			throw new InvalidArgumentException("Property $propertyName does not exist in " . get_class($object));
+			throw new PropertyNotFoundInObject($object, $propertyName);
 		}
 
-		$reflectionProperty->setAccessible(true);
-
-		return $reflectionProperty->getValue($object);
-	}
-
-	public function getAllPropertiesAsObjects(object $object): array
-	{
-		$reflectionObject = new ReflectionObject($object);
-
-		$allProperties = [];
-		foreach ($reflectionObject->getProperties() as $reflectionProperty) {
-			$propertyName                 = $reflectionProperty->getName();
-			$allProperties[$propertyName] = $this->getProperty($object, $propertyName);
-		}
-
-		return $allProperties;
+		return $reflectionProperty;
 	}
 }

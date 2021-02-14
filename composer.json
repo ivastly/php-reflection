@@ -1,22 +1,32 @@
 {
-  "name": "ivastly/docker-puphpeteer",
-  "description": "Fully functional docker image for puphpeteer.",
+  "name": "ivastly/php-reflection",
+  "description": "PHP Reflection API simplified.",
   "minimum-stability": "stable",
   "license": "MIT",
+  "keywords": [
+    "reflection",
+    "php",
+    "api"
+  ],
   "authors": [
     {
       "name": "github.com/ivastly"
     }
   ],
-  "require": {
-    "php": "7.2",
-    "ext-sockets": "*",
-    "nesk/puphpeteer": "^1.6"
-  },
-  "config": {
-    "platform": {
-      "php": "7.2",
-      "ext-sockets": "7.2.23"
+  "autoload": {
+    "psr-4": {
+      "Ivastly\\PhpReflection\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ivastly\\PhpReflection\\Test\\": "test/"
+    }
+  },
+  "require": {
+    "php": "8.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
   }
 }
