@@ -1,5 +1,7 @@
 # PHP Reflection
 
+![build status](https://github.com/ivastly/php-reflection/workflows/test-with-coverage/badge.svg)
+
 ## Rationale
 Ever questioned yourself why you need to write more than a single line of code to get a value of private property?
 What if the property is private and defined in a parent class? Even more toil is required. 
