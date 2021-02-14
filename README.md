@@ -10,8 +10,31 @@ Please welcome a library to solve this trouble once and for all.
 - Find out the visibility of a property, including parent classes, with a single call.
 - Check if a property exists in a class.
 
-## Growth model
-Contributors feed the project with pull requests, that's the only way for it to grow.
+## Installation
+```bash
+composer require ivastly/php-reflection
+```
+
+## Usage
+```php
+class ParentClass {
+    private $property = 'parent private property';
+}
+
+class C extends ParentClass {
+
+}
+
+$object = new C();
+$reflection = new \Ivastly\PhpReflection\Reflection();
+
+$value = $reflection->getProperty($object, 'property');
+$visibility = $reflection->getVisibility($object, 'property');
+
+echo "$visibility \$property = '$value;'\n"; // private $property = 'parent private property';
+```
+
+See [example.php](/doc/example.php)
 
 ## Tests
 ```bash
