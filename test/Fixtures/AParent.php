@@ -11,4 +11,6 @@ class AParent
 	protected string $parentOnlyProtectedField = 'parent only protected';
 
 	private string $parentOnlyPrivateField = 'parent only private';
+
+	private string $shadowedField = 'private shadowed in parent';
 }

@@ -99,6 +99,10 @@ class ReflectionTest extends TestCase
 				'property'      => 'parentOnlyPrivateField',
 				'expectedValue' => 'parent only private',
 			],
+			[
+				'property'      => 'shadowedField',
+				'expectedValue' => 'private shadowed in child',
+			],
 		];
 	}
 

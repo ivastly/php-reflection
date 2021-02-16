@@ -15,4 +15,6 @@ class AClass extends AParent
 	private string $privateField = 'private';
 
 	public static string $publicStaticField = 'public static';
+
+	private string $shadowedField = 'private shadowed in child';
 }
